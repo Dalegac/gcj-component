@@ -5,28 +5,33 @@
  * @Description:
  */
 
-
 const path = require("path");
 module.exports = {
-  webpackFinal: async ( config ) => {
+  webpackFinal: async (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@": path.resolve(__dirname, "../src"),
-      '@com': path.resolve(__dirname, '../src/components')
+      "@com": path.resolve(__dirname, "../src/components"),
     };
     config.resolve.extensions.push(".ts", ".tsx");
     config.module.rules.push({
       test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
+      use: ["style-loader", "css-loader", "sass-loader"],
     });
     return config;
   },
-  "stories": [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
-  "addons": [
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  addons: [
+    {
+      name: "@storybook/addon-docs",
+      options: {
+        configureJSX: true,
+        babelOptions: {},
+        sourceLoaderOptions: null,
+        transcludeMarkdown: true,
+      },
+    },
     "@storybook/addon-links",
-    "@storybook/addon-essentials"
-  ]
-}
+    "@storybook/addon-essentials",
+  ],
+};
